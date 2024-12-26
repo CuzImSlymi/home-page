@@ -6,7 +6,6 @@
     <title>Slymi</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
-
         body, html {
             margin: 0;
             padding: 0;
@@ -15,7 +14,6 @@
             overflow: hidden;
             height: 100%;
         }
-
         #bg-video {
             position: fixed;
             right: 0;
@@ -26,8 +24,9 @@
             height: auto;
             z-index: -1;
             filter: brightness(70%);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
-
         .overlay {
             position: absolute;
             top: 0;
@@ -37,7 +36,6 @@
             background: rgba(0, 0, 0, 0.3);
             z-index: 0;
         }
-
         .container {
             position: relative;
             z-index: 1;
@@ -48,21 +46,18 @@
             align-items: center;
             padding: 2rem;
         }
-
         h1 {
             font-size: 4rem;
             margin-bottom: 2rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             animation: fadeInUp 1s ease-out;
         }
-
         .button-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 1rem;
         }
-
         .button {
             padding: 1rem 2rem;
             font-size: 1.2rem;
@@ -76,13 +71,11 @@
             animation: fadeIn 0.5s ease-out forwards;
             opacity: 0;
         }
-
         .button:hover {
             background-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-
         #content {
             position: fixed;
             top: 50%;
@@ -98,7 +91,6 @@
             display: none;
             backdrop-filter: blur(10px);
         }
-
         .close-btn {
             position: absolute;
             top: 10px;
@@ -106,7 +98,6 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
-
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -117,15 +108,41 @@
                 transform: translateY(0);
             }
         }
-
         @keyframes fadeIn {
             to {
                 opacity: 1;
             }
         }
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #fff;
+            border-top: 3px solid #333;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
     <video id="bg-video" autoplay loop muted playsinline>
         <source src="bg_video.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -141,95 +158,97 @@
             <a href="https://discordapp.com/users/489797963481219087" class="button" target="_blank" style="animation-delay: 1s;">Contact</a>
         </div>
     </div>
-
     <div id="content">
         <span class="close-btn">&times;</span>
         <div id="content-inner"></div>
     </div>
-
     <script>
-		document.getElementById('about-btn').addEventListener('click', function() {
-			showContent('About Me', `
-				<p>Greetings! I'm Slymi, a developer that doesnt know what to learn because everything seems too easy.</p>
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('bg-video');
+            const preloader = document.getElementById('preloader');
 
-				<p>Example things i have already done:</p>
-				<ul>
-					<li>Creating AutoHotkey v2 macros</li>
-					<li>Developing good Websites</li>
-					<li>Exploring basics of Image Processing and Large Language Model AI's</li>
-					<li>Games using Redstone</li>
-				</ul>
+            video.addEventListener('canplay', function() {
+                preloader.style.display = 'none';
+                video.style.opacity = '1';
+            });
 
-				<p>Currently, I'm expanding my skillset in developement by:</p>
-				<ul>
-					<li>Studying deep into PHP</li>
-					<li>Getting more experience in AHK v2, Python, HTML along other stuff.</li>
-					<li>Checking out basics of other Languages</li>
-				</ul>
+            document.getElementById('about-btn').addEventListener('click', function() {
+                showContent('About Me', `
+                    <p>Greetings! I'm Slymi, a developer that doesnt know what to learn because everything seems too easy.</p>
+                    <p>Example things i have already done:</p>
+                    <ul>
+                        <li>Creating AutoHotkey v2 macros</li>
+                        <li>Developing good Websites</li>
+                        <li>Exploring basics of Image Processing and Large Language Model AI's</li>
+                        <li>Games using Redstone</li>
+                    </ul>
+                    <p>Currently, I'm expanding my skillset in developement by:</p>
+                    <ul>
+                        <li>Studying deep into PHP</li>
+                        <li>Getting more experience in AHK v2, Python, HTML along other stuff.</li>
+                        <li>Checking out basics of other Languages</li>
+                    </ul>
+                    <p>Beyond the usual Coding im also:</p>
+                    <ul>
+                        <li>Learning to play the piano, because i am bored</li>
+                        <li>Studying Japanese, because learning a new language keeps the mind sharp (and anime without subtitles is the dream!)</li>
+                        <li>Reading Books: Currently reading "48 Laws of Power"</li>
+                    </ul>
+                    <p>I believe the worst thing you could possibly do is give up on trying in everything that you are able to do. throwing away the potential because you tell yourself you can't. Giving up too easily and ending up regretting it.. even if nothing you do feels right, someday it will.</p>
+                `);
+            });
 
-				<p>Beyond the usual Coding im also:</p>
-				<ul>
-					<li>Learning to play the piano, because i am bored</li>
-					<li>Studying Japanese, because learning a new language keeps the mind sharp (and anime without subtitles is the dream!)</li>
-					<li>Reading Books: Currently reading "48 Laws of Power"</li>
+            document.getElementById('guides-btn').addEventListener('click', function() {
+                showContent('Guides', `
+                    <style>
+                        .guide-list {
+                            list-style-type: none;
+                            padding: 0;
+                        }
+                        .guide-list li {
+                            margin-bottom: 10px;
+                        }
+                        .guide-list a {
+                            display: block;
+                            padding: 10px;
+                            background-color: rgba(255, 255, 255, 0.1);
+                            border-radius: 5px;
+                            transition: background-color 0.3s ease;
+                            text-decoration: none;
+                            color: #fff;
+                        }
+                        .guide-list a:hover {
+                            background-color: rgba(255, 255, 255, 0.2);
+                        }
+                    </style>
+                    <h3>General Guides</h3>
+                    <ul class="guide-list">
+                        <li><a href="https://docs.google.com/document/d/1F__gdRy8UmTjdg7itpSTPjKu4TTvQ2JHK_kDTlSEy0Y/edit?tab=t.0#heading=h.r2sjm5jrvup7" target="_blank">RDP Guide</a></li>
+                        <li><a href="https://docs.google.com/document/d/1Tz_tIuQpJXcYNL3WQFO-w6ZEEkLQPu-V4nzHDga2CzU/edit?tab=t.0" target="_blank">Fuzzy Alt Guide</a></li>
+                        <li><a href="https://docs.google.com/document/d/1eeCIuP8RyzoT_XLcvRayihNy3-3MOxlfLb2c4qfb0_s/edit?tab=t.0" target="_blank">Tad Alt Guide</a></li>
+                        <li><a href="https://docs.google.com/document/d/1RE5DusE9rio6bnfdw65ghfdWX9LMsCWvk-Mo0OizqLc/edit?tab=t.0#heading=h.1gkfjvgl7jcb" target="_blank">Alt Progression Guide</a></li>
+                        <li><a href="https://docs.google.com/document/d/1hT6AuKwUR0pYPGOEfjzre-AKb23iJR8IqtXN4MsCZ80/edit?usp=sharing" target="_blank">Beequip & Wax Guide</a></li>
+                    </ul>
+                    <h3>Specialized Guides</h3>
+                    <ul class="guide-list">
+                        <li><a href="https://docs.google.com/document/d/1ja1AjqjfyVKIYLkfkhpZNklOqrSe0udoI2nP6buyp2Y/edit?tab=t.0#heading=h.naocuarx61v4" target="_blank">Blue Hive Guide</a></li>
+                        <li><a href="https://docs.google.com/document/d/1jTMMhY-LaK2CsfRQauOmN8IfdsT53tbeh3LySd4sHao/edit?tab=t.0#heading=h.7y836563ws81" target="_blank">No Haste Guide</a></li>
+                        <li><a href="https://docs.google.com/document/d/1K2I-Q2hqYCDBHFkPl00fRVeN_DsMCBC-NIMyyVJE-cU/edit" target="_blank">Honeyday Guide</a></li>
+                        <li><a href="https://docs.google.com/document/d/1cYUB0-0nYUduTJXpZixF2hAGJYlC24cMQ2N-ugZEyqE/edit?tab=t.0#heading=h.9ojoa7ar9ouw" target="_blank">White Hive Guide</a></li>
+                    </ul>
+                `);
+            });
 
-				</ul>
+            function showContent(title, content) {
+                const contentDiv = document.getElementById('content');
+                const innerContent = document.getElementById('content-inner');
+                innerContent.innerHTML = `<h2>${title}</h2>${content}`;
+                contentDiv.style.display = 'block';
+            }
 
-				<p>I believe the worst thing you could possibly do is give up on trying in everything that you are able to do. throwing away the potential because you tell yourself you can't. Giving up too easily and ending up regretting it.. even if nothing you do feels right, someday it will.</p>
-			`);
-		});
-
-		document.getElementById('guides-btn').addEventListener('click', function() {
-			showContent('Guides', `
-				<style>
-					.guide-list {
-						list-style-type: none;
-						padding: 0;
-					}
-					.guide-list li {
-						margin-bottom: 10px;
-					}
-					.guide-list a {
-						display: block;
-						padding: 10px;
-						background-color: rgba(255, 255, 255, 0.1);
-						border-radius: 5px;
-						transition: background-color 0.3s ease;
-						text-decoration: none;
-						color: #fff;
-					}
-					.guide-list a:hover {
-						background-color: rgba(255, 255, 255, 0.2);
-					}
-				</style>
-				<h3>General Guides</h3>
-				<ul class="guide-list">
-					<li><a href="https://docs.google.com/document/d/1F__gdRy8UmTjdg7itpSTPjKu4TTvQ2JHK_kDTlSEy0Y/edit?tab=t.0#heading=h.r2sjm5jrvup7" target="_blank">RDP Guide</a></li>
-					<li><a href="https://docs.google.com/document/d/1Tz_tIuQpJXcYNL3WQFO-w6ZEEkLQPu-V4nzHDga2CzU/edit?tab=t.0" target="_blank">Fuzzy Alt Guide</a></li>
-					<li><a href="https://docs.google.com/document/d/1eeCIuP8RyzoT_XLcvRayihNy3-3MOxlfLb2c4qfb0_s/edit?tab=t.0" target="_blank">Tad Alt Guide</a></li>
-					<li><a href="https://docs.google.com/document/d/1RE5DusE9rio6bnfdw65ghfdWX9LMsCWvk-Mo0OizqLc/edit?tab=t.0#heading=h.1gkfjvgl7jcb" target="_blank">Alt Progression Guide</a></li>
-					<li><a href="https://docs.google.com/document/d/1hT6AuKwUR0pYPGOEfjzre-AKb23iJR8IqtXN4MsCZ80/edit?usp=sharing" target="_blank">Beequip & Wax Guide</a></li>
-
-				</ul>
-				<h3>Specialized Guides</h3>
-				<ul class="guide-list">
-					<li><a href="https://docs.google.com/document/d/1ja1AjqjfyVKIYLkfkhpZNklOqrSe0udoI2nP6buyp2Y/edit?tab=t.0#heading=h.naocuarx61v4" target="_blank">Blue Hive Guide</a></li>
-					<li><a href="https://docs.google.com/document/d/1jTMMhY-LaK2CsfRQauOmN8IfdsT53tbeh3LySd4sHao/edit?tab=t.0#heading=h.7y836563ws81" target="_blank">No Haste Guide</a></li>
-					<li><a href="https://docs.google.com/document/d/1K2I-Q2hqYCDBHFkPl00fRVeN_DsMCBC-NIMyyVJE-cU/edit" target="_blank">Honeyday Guide</a></li>
-					<li><a href="https://docs.google.com/document/d/1cYUB0-0nYUduTJXpZixF2hAGJYlC24cMQ2N-ugZEyqE/edit?tab=t.0#heading=h.9ojoa7ar9ouw" target="_blank">White Hive Guide</a></li>
-				</ul>
-			`);
-		});
-
-        function showContent(title, content) {
-            const contentDiv = document.getElementById('content');
-            const innerContent = document.getElementById('content-inner');
-            innerContent.innerHTML = `<h2>${title}</h2>${content}`;
-            contentDiv.style.display = 'block';
-        }
-
-        document.querySelector('.close-btn').addEventListener('click', function() {
-            document.getElementById('content').style.display = 'none';
+            document.querySelector('.close-btn').addEventListener('click', function() {
+                document.getElementById('content').style.display = 'none';
+            });
         });
     </script>
 </body>
