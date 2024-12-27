@@ -299,7 +299,6 @@
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#projects">Projects</a>
-                <a href="#skills">Skills</a>
                 <a href="#contact">Contact</a>
             </div>
         </div>
@@ -308,7 +307,7 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>Hey, I'm Slymi</h1>
-            <p>A versatile developer passionate about AutoHotkey, web development, AI, and game design</p>
+            <p>A developer passionate about AutoHotkey, web development, AI, and game design</p>
             <a href="#projects" class="btn">View My Work</a>
         </div>
     </section>
@@ -316,26 +315,26 @@
     <section class="section" id="about">
         <div class="section-content">
             <h2>About Me</h2>
-            <p>Hey! I'm Slymi, a developer always eager to learn and grow. I believe in continuous improvement and pushing boundaries in everything I do.</p>
+            <p>Hey! I'm Slymi, a developer always eager to learn and grow. I believe the worst thing you could possibly do is give up on trying everything that you are able to do. Throwing away the potential because you tell yourself you can't. Giving up too easily and ending up regretting it.</p>
             <div class="skills-container">
                 <div class="skill-category">
                     <h3>Current Expertise</h3>
                     <ul class="skill-list">
                         <li>AutoHotkey v2 macros</li>
                         <li>Web development</li>
-                        <li>Image Processing</li>
+                        <li>Image Processing AI</li>
                         <li>Large Language Model AI basics</li>
-                        <li>Redstone game development</li>
+                        <li>Redstone</li>
                     </ul>
                 </div>
                 <div class="skill-category">
                     <h3>Learning Journey</h3>
                     <ul class="skill-list">
                         <li>PHP for backend development</li>
-                        <li>Advanced AHK v2 techniques</li>
+                        <li>Advanced AHK v2</li>
                         <li>Python development</li>
                         <li>Piano</li>
-                        <li>Japanese language</li>
+                        <li>Japanese</li>
                     </ul>
                 </div>
             </div>
@@ -348,17 +347,17 @@
             <div class="projects-grid">
                 <div class="project-card">
                     <h3>PathMaker</h3>
-                    <p>An innovative tool for path creation and optimization. Built with modern web technologies.</p>
+                    <p>An innovative tool for path creation and optimization, built online</p>
                     <a href="https://pathmaker.slymi.org/" class="btn" target="_blank">View Project</a>
                 </div>
                 <div class="project-card">
                     <h3>BSS Guides</h3>
-                    <p>Comprehensive guides and tools for optimizing gameplay strategies.</p>
+                    <p>Many Guides i made alone or with help from others for BSS.</p>
                     <a href="#guides" class="btn">View Guides</a>
                 </div>
                 <div class="project-card">
                     <h3>GitHub Projects</h3>
-                    <p>Explore my open-source contributions and personal projects.</p>
+                    <p>Explore the Projects i published on Github.</p>
                     <a href="https://github.com/CuzImSlymi/" class="btn" target="_blank">View GitHub</a>
                 </div>
             </div>
@@ -374,8 +373,8 @@
                     <input type="text" id="name" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="email">Email (not required)</label>
+                    <input type="email" id="email" name="email">
                 </div>
                 <div class="form-group">
                     <label for="message">Message</label>
@@ -420,7 +419,7 @@
                 const message = document.getElementById('message').value;
                 const statusDiv = document.getElementById('formStatus');
                 
-                if (!name || !email || !message) {
+                if (!name || !message) {
                     showStatus('Please fill in all fields', 'error');
                     return;
                 }
