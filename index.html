@@ -223,6 +223,45 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .popup-content {
+            background-color: var(--background-color);
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid var(--primary-color);
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+        }
+        
+        .close {
+            color: var(--text-color);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: var(--primary-color);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+        
         .contact-form {
             max-width: 600px;
             margin: 2rem auto;
@@ -425,6 +464,34 @@
                 <a href="https://discordapp.com/users/489797963481219087" target="_blank">Discord</a>
             </div>
         </div>
+
+        <div id="guidesPopup" class="popup">
+            <div class="popup-content">
+                <span class="close">&times;</span>
+                <h2>BSS Guides</h2>
+                <div class="guides-container">
+                    <div class="guide-category">
+                        <h3>General Guides</h3>
+                        <ul class="guide-list">
+                            <li><a href="https://docs.google.com/document/d/1F__gdRy8UmTjdg7itpSTPjKu4TTvQ2JHK_kDTlSEy0Y/edit?tab=t.0#heading=h.r2sjm5jrvup7" target="_blank">RDP Guide</a></li>
+                            <li><a href="https://docs.google.com/document/d/1Tz_tIuQpJXcYNL3WQFO-w6ZEEkLQPu-V4nzHDga2CzU/edit?tab=t.0" target="_blank">Fuzzy Alt Guide</a></li>
+                            <li><a href="https://docs.google.com/document/d/1eeCIuP8RyzoT_XLcvRayihNy3-3MOxlfLb2c4qfb0_s/edit?tab=t.0" target="_blank">Tad Alt Guide</a></li>
+                            <li><a href="https://docs.google.com/document/d/1RE5DusE9rio6bnfdw65ghfdWX9LMsCWvk-Mo0OizqLc/edit?tab=t.0#heading=h.1gkfjvgl7jcb" target="_blank">Alt Progression Guide</a></li>
+                            <li><a href="https://docs.google.com/document/d/1hT6AuKwUR0pYPGOEfjzre-AKb23iJR8IqtXN4MsCZ80/edit?usp=sharing" target="_blank">Beequip & Wax Guide</a></li>
+                        </ul>
+                    </div>
+                    <div class="guide-category">
+                        <h3>Specialized Guides</h3>
+                        <ul class="guide-list">
+                            <li><a href="https://docs.google.com/document/d/1ja1AjqjfyVKIYLkfkhpZNklOqrSe0udoI2nP6buyp2Y/edit?tab=t.0#heading=h.naocuarx61v4" target="_blank">Blue Hive Guide</a></li>
+                            <li><a href="https://docs.google.com/document/d/1jTMMhY-LaK2CsfRQauOmN8IfdsT53tbeh3LySd4sHao/edit?tab=t.0#heading=h.7y836563ws81" target="_blank">No Haste Guide</a></li>
+                            <li><a href="https://docs.google.com/document/d/1K2I-Q2hqYCDBHFkPl00fRVeN_DsMCBC-NIMyyVJE-cU/edit" target="_blank">Honeyday Guide</a></li>
+                            <li><a href="https://docs.google.com/document/d/1cYUB0-0nYUduTJXpZixF2hAGJYlC24cMQ2N-ugZEyqE/edit?tab=t.0#heading=h.9ojoa7ar9ouw" target="_blank">White Hive Guide</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <script>
@@ -449,7 +516,8 @@
                     }
                 });
             });
-        
+
+            
             async function submitForm() {
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
@@ -519,6 +587,27 @@
             }
         
             window.submitForm = submitForm;
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const guidesPopup = document.getElementById('guidesPopup');
+            const bssGuidesBtn = document.querySelector('.project-card a[href="#guides"]');
+            const closeBtn = guidesPopup.querySelector('.close');
+        
+            bssGuidesBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                guidesPopup.style.display = 'block';
+            });
+        
+            closeBtn.addEventListener('click', function() {
+                guidesPopup.style.display = 'none';
+            });
+        
+            window.addEventListener('click', function(e) {
+                if (e.target === guidesPopup) {
+                    guidesPopup.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
