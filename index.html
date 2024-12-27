@@ -121,7 +121,7 @@
 
         .section {
             padding: var(--section-padding);
-            min-height: 100vh;
+            min-height: 80vh; 
             display: flex;
             align-items: center;
             position: relative;
@@ -189,10 +189,13 @@
         .contact-form {
             max-width: 600px;
             margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem; 
         }
 
         .form-group label {
@@ -208,8 +211,28 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 5px;
             color: var(--text-color);
+            font-family: 'Montserrat', sans-serif;
         }
 
+        .form-status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .form-status.success {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            display: block;
+        }
+
+        .form-status.error {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            display: block;
+        }
+        
         .btn {
             display: inline-block;
             padding: 1rem 2rem;
@@ -358,7 +381,8 @@
                     <label for="message">Message</label>
                     <textarea id="message" name="message" rows="5" required></textarea>
                 </div>
-                <button type="submit" class="btn">Send Message</button>
+                <button type="submit" class="btn" onclick="submitForm()">Send Message</button>
+                <div id="formStatus" class="form-status"></div>
             </div>
             <div class="social-links">
                 <a href="https://github.com/CuzImSlymi/" target="_blank">GitHub</a>
@@ -377,7 +401,7 @@
                     navbar.classList.remove('scrolled');
                 }
             });
-
+        
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -389,16 +413,76 @@
                     }
                 });
             });
-
-            const form = document.querySelector('.contact-form');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    // submission form logic here
-                    alert('Thank you for your message! I will get back to you soon.');
-                    form.reset();
-                });
+        
+            async function submitForm() {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                const statusDiv = document.getElementById('formStatus');
+                
+                if (!name || !email || !message) {
+                    showStatus('Please fill in all fields', 'error');
+                    return;
+                }
+        
+                const webhookURL = 'https://discord.com/api/webhooks/1322164968648474685/eDifwxvdGYQ3obyu-D6Nm4n6nt4WW0KZTbVAGYEgk3Q_J8GffTf19fAlQnWmoWigaKgS';
+        
+                const payload = {
+                    embeds: [{
+                        title: 'New Portfolio Message',
+                        color: 3447003,
+                        fields: [
+                            {
+                                name: 'Name',
+                                value: name,
+                                inline: true
+                            },
+                            {
+                                name: 'Email',
+                                value: email,
+                                inline: true
+                            },
+                            {
+                                name: 'Message',
+                                value: message
+                            }
+                        ],
+                        timestamp: new Date()
+                    }]
+                };
+        
+                try {
+                    const response = await fetch(webhookURL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(payload)
+                    });
+        
+                    if (response.ok) {
+                        showStatus('Message sent successfully!', 'success');
+                        document.getElementById('name').value = '';
+                        document.getElementById('email').value = '';
+                        document.getElementById('message').value = '';
+                    } else {
+                        showStatus('Failed to send message. Please try again.', 'error');
+                    }
+                } catch (error) {
+                    showStatus('An error occurred. Please try again later.', 'error');
+                }
             }
+        
+            function showStatus(message, type) {
+                const statusDiv = document.getElementById('formStatus');
+                statusDiv.textContent = message;
+                statusDiv.className = `form-status ${type}`;
+                setTimeout(() => {
+                    statusDiv.className = 'form-status';
+                }, 5000);
+            }
+        
+            window.submitForm = submitForm;
         });
     </script>
 </body>
