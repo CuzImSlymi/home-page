@@ -3,30 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Slymi's Portfolio - Versatile developer showcasing projects and skills in web development, AI, and game design.">
-    <meta name="keywords" content="Slymi, developer, portfolio, web development, AI, game design">
-    <title>Slymi</title>
+    <meta name="description" content="Slymi's Portfolio - Versatile developer specializing in AutoHotkey, web development, AI, and game design">
+    <meta name="keywords" content="Slymi, developer, portfolio, web development, AI, game design, AutoHotkey">
+    <title>Slymi - Developer Portfolio</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+
         :root {
             --primary-color: #3498db;
             --secondary-color: #2ecc71;
             --text-color: #ecf0f1;
-            --background-color: rgba(0, 0, 0, 0.7);
+            --background-color: rgba(0, 0, 0, 0.9);
+            --section-padding: 5rem 2rem;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Playfair+Display:wght@700&display=swap');
-        body, html {
+        * {
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-color);
-            overflow: hidden;
-            height: 100%;
-            background-color: var(--background-color);
+            box-sizing: border-box;
         }
 
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: #000;
         }
 
         #bg-video {
@@ -38,93 +43,210 @@
             width: auto;
             height: auto;
             z-index: -1;
-            filter: brightness(70%);
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+            filter: brightness(40%);
+            object-fit: cover;
         }
 
-        .overlay {
-            position: absolute;
+        .navbar {
+            position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem;
+            transition: all 0.3s ease;
         }
 
-        .container {
-            position: relative;
-            z-index: 1;
-            min-height: 100vh;
+        .navbar.scrolled {
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            padding: 2rem;
         }
 
-        h1 {
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
             font-size: 4rem;
-            margin-bottom: 2rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
             animation: fadeInUp 1s ease-out;
         }
 
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .button {
-            padding: 1rem 2rem;
+        .hero p {
             font-size: 1.2rem;
-            text-decoration: none;
-            color: var(--text-color);
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            animation: fadeIn 0.5s ease-out forwards;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
             opacity: 0;
         }
 
-        .button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .section {
+            padding: var(--section-padding);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
         }
 
-        #content {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: var(--background-color);
-            padding: 2rem;
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            z-index: 1000;
-            max-width: 80%;
-            max-height: 80%;
-            overflow-y: auto;
-            display: none;
-            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
         }
 
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.5rem;
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .skill-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .skill-list li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-list li::before {
+            content: "•";
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            color: var(--text-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+            border: none;
             cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -132,121 +254,151 @@
             }
         }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
             }
-        }
 
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid var(--text-color);
-            border-top: 3px solid #333;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="preloader">
-        <div class="spinner"></div>
-    </div>
     <video id="bg-video" autoplay loop muted playsinline>
         <source src="bg_video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
     </video>
-    <div class="overlay"></div>
-    <div class="container">
-        <h1>Slymi's Portfolio</h1>
-        <div class="button-container">
-            <a href="#about-content" class="button" id="about-btn" style="animation-delay: 0.2s;" aria-label="Learn more about Slymi">About Me</a>
-            <a href="https://pathmaker.slymi.org/" class="button" target="_blank" style="animation-delay: 0.4s;">PathMaker</a>
-            <a href="https://github.com/CuzImSlymi/" class="button" target="_blank" style="animation-delay: 0.6s;">My Github</a>
-            <a href="#guides" class="button" id="guides-btn" style="animation-delay: 0.8s;">BSS Guides</a>
-            <a href="https://discordapp.com/users/489797963481219087" class="button" target="_blank" style="animation-delay: 1s;">Contact</a>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="nav-logo">Slymi</a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+            </div>
         </div>
-    </div>
-    <div id="content">
-        <span class="close-btn">&times;</span>
-        <div id="content-inner"></div>
-    </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Hey, I'm Slymi</h1>
+            <p>A versatile developer passionate about AutoHotkey, web development, AI, and game design</p>
+            <a href="#projects" class="btn">View My Work</a>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="section-content">
+            <h2>About Me</h2>
+            <p>Hey! I'm Slymi, a developer always eager to learn and grow. I believe in continuous improvement and pushing boundaries in everything I do.</p>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>Current Expertise</h3>
+                    <ul class="skill-list">
+                        <li>AutoHotkey v2 macros</li>
+                        <li>Web development</li>
+                        <li>Image Processing</li>
+                        <li>Large Language Model AI basics</li>
+                        <li>Redstone game development</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Learning Journey</h3>
+                    <ul class="skill-list">
+                        <li>PHP for backend development</li>
+                        <li>Advanced AHK v2 techniques</li>
+                        <li>Python development</li>
+                        <li>Piano</li>
+                        <li>Japanese language</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects">
+        <div class="section-content">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>PathMaker</h3>
+                    <p>An innovative tool for path creation and optimization. Built with modern web technologies.</p>
+                    <a href="https://pathmaker.slymi.org/" class="btn" target="_blank">View Project</a>
+                </div>
+                <div class="project-card">
+                    <h3>BSS Guides</h3>
+                    <p>Comprehensive guides and tools for optimizing gameplay strategies.</p>
+                    <a href="#guides" class="btn">View Guides</a>
+                </div>
+                <div class="project-card">
+                    <h3>GitHub Projects</h3>
+                    <p>Explore my open-source contributions and personal projects.</p>
+                    <a href="https://github.com/CuzImSlymi/" class="btn" target="_blank">View GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="section-content">
+            <h2>Get in Touch</h2>
+            <div class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/CuzImSlymi/" target="_blank">GitHub</a>
+                <a href="https://discordapp.com/users/489797963481219087" target="_blank">Discord</a>
+            </div>
+        </div>
+    </section>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const video = document.getElementById('bg-video');
-            const preloader = document.getElementById('preloader');
-
-            video.addEventListener('canplay', function() {
-                preloader.style.display = 'none';
-                video.style.opacity = '1';
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
             });
-
-            document.getElementById('about-btn').addEventListener('click', function() {
-                showContent('About Me', `
-                    <div id="about-content">
-                        <h2>About Me</h2>
-                        <p>Hey! I'm Slymi, a developer always eager to learn and grow.</p>
-                        <h3>My current expertise</h3>
-                        <ul>
-                            <li>AutoHotkey v2 macros</li>
-                            <li>Web development</li>
-                            <li>Image Processing and Large Language Model AI basics</li>
-                            <li>Redstone game development</li>
-                        </ul>
-                        <h3>Current Focus</h3>
-                        <ul>
-                            <li>PHP for backend development</li>
-                            <li>Expanding skills in AHK v2, Python, and HTML</li>
-                            <li>Exploring various programming languages</li>
-                        </ul>
-                        <h3>Beyond Coding</h3>
-                        <ul>
-                            <li>Learning piano</li>
-                            <li>Studying Japanese</li>
-                            <li>Reading: Currently "48 Laws of Power"</li>
-                        </ul>
-                        <p>I believe the worst thing you could possibly do is give up on trying in everything that you are able to do. throwing away the potential because you tell yourself you can't. Giving up too easily and ending up regretting it.. even if nothing you do feels right, someday it will.</p>
-                    </div>
-                `);
-            });
-
-            document.querySelector('.close-btn').addEventListener('click', function() {
-                document.getElementById('content').style.display = 'none';
-            });
-
-            function showContent(title, content) {
-                const contentDiv = document.getElementById('content');
-                const innerContent = document.getElementById('content-inner');
-                innerContent.innerHTML = `<h2>${title}</h2>${content}`;
-                contentDiv.style.display = 'block';
-            }
 
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
                 });
             });
+
+            const form = document.querySelector('.contact-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // submission form logic here
+                    alert('Thank you for your message! I will get back to you soon.');
+                    form.reset();
+                });
+            }
         });
     </script>
 </body>
