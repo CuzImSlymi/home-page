@@ -4,20 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - Slymi's Developer Portfolio</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --text-color: #ecf0f1;
+            --background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
-            color: #ecf0f1;
+            color: var(--text-color);
             background-color: #000;
             padding: 20px;
         }
-        h1, h2 {
-            color: #3498db;
-        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
+            background-color: var(--background-color);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        p, ul {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            padding-left: 2rem;
+        }
+
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-color);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background-color: var(--secondary-color);
         }
     </style>
 </head>
@@ -66,6 +127,8 @@
         
         <h2>8. Contact Information</h2>
         <p>If you have any questions about this Privacy Policy, please contact us through the provided contact information on our website.</p>
+
+        <a href="index.html" class="back-link">Back to Home</a>
     </div>
 </body>
 </html>
