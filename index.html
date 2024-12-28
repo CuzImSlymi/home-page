@@ -343,6 +343,29 @@
             color: var(--primary-color);
         }
 
+        #consent-popup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    #consent-popup .popup-content {
+        text-align: center;
+        max-width: 500px;
+    }
+    
+    #consent-popup h2 {
+        margin-bottom: 1rem;
+    }
+    
+    #consent-popup p {
+        margin-bottom: 1.5rem;
+    }
+    
+    body.consent-pending {
+        overflow: hidden;
+    }
+        
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -598,6 +621,32 @@
                 }
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const consentPopup = document.getElementById('consent-popup');
+            const acceptConsentBtn = document.getElementById('accept-consent');
+            
+            if (!localStorage.getItem('consentGiven')) {
+                document.body.classList.add('consent-pending');
+                consentPopup.style.display = 'flex';
+            }
+            
+            acceptConsentBtn.addEventListener('click', function() {
+                localStorage.setItem('consentGiven', 'true');
+                consentPopup.style.display = 'none';
+                document.body.classList.remove('consent-pending');
+            });
+        });
     </script>
+
+    <div id="consent-popup" class="popup">
+        <div class="popup-content">
+            <h2>Welcome to Slymi's Developer Portfolio</h2>
+            <p>By using this site, you agree to our Privacy Policy and the use of cookies for analytics and personalization.</p>
+            <button id="accept-consent" class="btn">I Agree</button>
+        </div>
+    </div>
+
+    
 </body>
 </html>
