@@ -352,6 +352,14 @@
             color: var(--primary-color);
         }
 
+        .project-image {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          border-radius: 10px 10px 0 0;
+          margin-bottom: 1rem;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -428,26 +436,30 @@
     </section>
 
     <div class="projects-grid">
-      <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-        <h3>PathMaker</h3>
-        <p>An innovative tool for path creation and optimization, built online</p>
-        <a href="https://pathmaker.slymi.org/" class="btn" target="_blank">View Project</a>
-      </div>
-      <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-        <h3>BSS Guides</h3>
-        <p>Many Guides i made alone or with help from others for BSS.</p>
-        <a href="#guides" class="btn">View Guides</a>
-      </div>
-      <div class="project-card" data-aos="fade-up" data-aos-delay="300">
-        <h3>GitHub Projects</h3>
-        <p>Explore the Projects i published on Github.</p>
-        <a href="https://github.com/CuzImSlymi/" class="btn" target="_blank">View GitHub</a>
-      </div>
-      <div class="project-card" data-aos="fade-up" data-aos-delay="400">
-        <h3>AI Macro</h3>
-        <p>Advanced AI-powered macro system for automation tasks</p>
-        <a href="#" class="btn">Learn More</a>
-      </div>
+        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+          <img src="pathmaker.png" alt="PathMaker" class="project-image">
+          <h3>PathMaker</h3>
+          <p>An innovative tool for path creation and optimization, built online</p>
+          <a href="https://pathmaker.slymi.org/" class="btn" target="_blank">View Project</a>
+        </div>
+        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+          <img src="bssguides.png" alt="BSS Guides" class="project-image">
+          <h3>BSS Guides</h3>
+          <p>Many Guides i made alone or with help from others for BSS.</p>
+          <a href="#guides" class="btn">View Guides</a>
+        </div>
+        <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+          <img src="github.png" alt="GitHub Projects" class="project-image">
+          <h3>GitHub Projects</h3>
+          <p>Explore the Projects i published on Github.</p>
+          <a href="https://github.com/CuzImSlymi/" class="btn" target="_blank">View GitHub</a>
+        </div>
+        <div class="project-card" data-aos="fade-up" data-aos-delay="400">
+          <img src="aimacro.png" alt="AI Macro" class="project-image">
+          <h3>AI Macro</h3>
+          <p>Advanced AI-powered macro for BSS</p>
+          <a href="#" class="btn">Learn More</a>
+        </div>
     </div>
 
     <section class="section" id="contact">
