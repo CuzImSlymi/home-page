@@ -11,7 +11,10 @@
     
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
 
@@ -298,6 +301,29 @@
           transform: translateY(0);
           opacity: 1;
         }
+
+        .project-container {
+          display: flex;
+          flex-direction: column;
+          gap: 4rem;
+        }
+        
+        .project-item {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+        }
+        
+        .project-text {
+          flex: 1;
+        }
+        
+        .project-image img {
+          width: 300px;
+          height: 300px;
+          object-fit: cover;
+          border-radius: 10px;
+        }
         
         #pathmaker {
           background-image: url('pathmaker-bg.jpg');
@@ -482,38 +508,33 @@
         </div>
     </section>
 
-    <section class="project-section" id="pathmaker">
-      <div class="project-content">
-        <h2>PathMaker</h2>
-        <p>An innovative tool for path creation and optimization, built online</p>
-        <a href="https://pathmaker.slymi.org/" class="btn" target="_blank">View Project</a>
+    <section class="section" id="projects">
+      <div class="section-content">
+        <h2>Featured Projects</h2>
+        <div class="project-container">
+          <div class="project-item">
+            <div class="project-text">
+              <h3>BSS Guides</h3>
+              <p>Many Guides i made alone or with help from others for BSS.</p>
+              <a href="#" class="btn" id="bssGuidesBtn">View Guides</a>
+            </div>
+            <div class="project-image">
+              <img src="bss-guides.jpg" alt="BSS Guides" width="300" height="300">
+            </div>
+          </div>
+          <div class="project-item">
+            <div class="project-text">
+              <h3>GitHub Projects</h3>
+              <p>Explore the Projects i published on Github.</p>
+              <a href="https://github.com/CuzImSlymi/" class="btn" target="_blank">View GitHub</a>
+            </div>
+            <div class="project-image">
+              <img src="github-projects.jpg" alt="GitHub Projects" width="300" height="300">
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-    
-    <section class="project-section" id="bss-guides">
-      <div class="project-content">
-        <h2>BSS Guides</h2>
-        <p>Many Guides i made alone or with help from others for BSS.</p>
-        <a href="#guides" class="btn">View Guides</a>
-      </div>
-    </section>
-    
-    <section class="project-section" id="github-projects">
-      <div class="project-content">
-        <h2>GitHub Projects</h2>
-        <p>Explore the Projects i published on Github.</p>
-        <a href="https://github.com/CuzImSlymi/" class="btn" target="_blank">View GitHub</a>
-      </div>
-    </section>
-    
-    <section class="project-section" id="ai-macro">
-      <div class="project-content">
-        <h2>AI Macro</h2>
-        <p>Advanced AI-powered macro for BSS</p>
-        <a href="#" class="btn">Learn More</a>
-      </div>
-    </section>
-
 
     <section class="section" id="contact">
       <div class="section-content">
@@ -559,6 +580,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Navbar scroll effect
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
                 if (window.scrollY > 50) {
@@ -568,6 +590,7 @@
                 }
             });
         
+            // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -579,13 +602,12 @@
                     }
                 });
             });
-
-            
+        
+            // Form submission function
             async function submitForm() {
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
                 const message = document.getElementById('message').value;
-                const statusDiv = document.getElementById('formStatus');
                 
                 if (!name || !message) {
                     showStatus('Please fill in all fields', 'error');
@@ -599,20 +621,9 @@
                         title: 'New Portfolio Message',
                         color: 3447003,
                         fields: [
-                            {
-                                name: 'Name',
-                                value: name,
-                                inline: true
-                            },
-                            {
-                                name: 'Email',
-                                value: email,
-                                inline: true
-                            },
-                            {
-                                name: 'Message',
-                                value: message
-                            }
+                            { name: 'Name', value: name, inline: true },
+                            { name: 'Email', value: email, inline: true },
+                            { name: 'Message', value: message }
                         ],
                         timestamp: new Date()
                     }]
@@ -650,60 +661,55 @@
             }
         
             window.submitForm = submitForm;
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
+        
+            // Guides popup functionality
             const guidesPopup = document.getElementById('guidesPopup');
             const bssGuidesBtn = document.querySelector('.project-card a[href="#guides"]');
             const closeBtn = guidesPopup.querySelector('.close');
         
-            bssGuidesBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                guidesPopup.style.display = 'block';
-            });
+            if (bssGuidesBtn && guidesPopup) {
+                bssGuidesBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    guidesPopup.style.display = 'block';
+                });
         
-            closeBtn.addEventListener('click', function() {
-                guidesPopup.style.display = 'none';
-            });
-        
-            window.addEventListener('click', function(e) {
-                if (e.target === guidesPopup) {
+                closeBtn.addEventListener('click', function() {
                     guidesPopup.style.display = 'none';
-                }
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-          AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 200
-          });
-        });
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-          anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-              behavior: 'smooth'
-            });
-          });
-        });
-
-        const projectSections = document.querySelectorAll('.project-section');
-
-        function checkScroll() {
-          projectSections.forEach(section => {
-            const sectionTop = section.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
-            if (sectionTop < windowHeight * 0.75) {
-              section.classList.add('active');
-            }
-          });
-        }
-        window.addEventListener('scroll', checkScroll);
-        window.addEventListener('load', checkScroll);
+                });
         
+                window.addEventListener('click', function(e) {
+                    if (e.target === guidesPopup) {
+                        guidesPopup.style.display = 'none';
+                    }
+                });
+            }
+        
+            // AOS initialization
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 1000,
+                    once: true,
+                    offset: 200
+                });
+            }
+        
+            // Project sections scroll effect
+            const projectSections = document.querySelectorAll('.project-section');
+        
+            function checkScroll() {
+                projectSections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    if (sectionTop < windowHeight * 0.75) {
+                        section.classList.add('active');
+                    }
+                });
+            }
+        
+            window.addEventListener('scroll', checkScroll);
+            window.addEventListener('load', checkScroll);
+        });
+
     </script>
     <footer>
         <div class="footer-container">
