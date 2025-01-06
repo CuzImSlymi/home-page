@@ -270,8 +270,51 @@
             cursor: pointer;
         }
 
-
+        .project-section {
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-attachment: fixed;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          position: relative;
+        }
         
+        .project-content {
+          background: rgba(0, 0, 0, 0.7);
+          padding: 2rem;
+          border-radius: 10px;
+          text-align: center;
+          max-width: 600px;
+          width: 90%;
+          transform: translateY(50px);
+          opacity: 0;
+          transition: all 0.5s ease-out;
+        }
+
+        .project-section.active .project-content {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        
+        #pathmaker {
+          background-image: url('pathmaker-bg.jpg');
+        }
+        
+        #bss-guides {
+          background-image: url('bss-guides-bg.jpg');
+        }
+        
+        #github-projects {
+          background-image: url('github-projects-bg.jpg');
+        }
+        
+        #ai-macro {
+          background-image: url('ai-macro-bg.jpg');
+        }
+
         .contact-form {
             max-width: 600px;
             margin: 2rem auto;
@@ -439,32 +482,38 @@
         </div>
     </section>
 
-    <div class="projects-grid">
-        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-          <img src="pathmaker.png" alt="PathMaker" class="project-image">
-          <h3>PathMaker</h3>
-          <p>An innovative tool for path creation and optimization, built online</p>
-          <a href="https://pathmaker.slymi.org/" class="btn" target="_blank">View Project</a>
-        </div>
-        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-          <img src="bssguides.png" alt="BSS Guides" class="project-image">
-          <h3>BSS Guides</h3>
-          <p>Many Guides i made alone or with help from others for BSS.</p>
-          <a href="#guides" class="btn">View Guides</a>
-        </div>
-        <div class="project-card" data-aos="fade-up" data-aos-delay="300">
-          <img src="github.png" alt="GitHub Projects" class="project-image">
-          <h3>GitHub Projects</h3>
-          <p>Explore the Projects i published on Github.</p>
-          <a href="https://github.com/CuzImSlymi/" class="btn" target="_blank">View GitHub</a>
-        </div>
-        <div class="project-card" data-aos="fade-up" data-aos-delay="400">
-          <img src="aimacro.png" alt="AI Macro" class="project-image">
-          <h3>AI Macro</h3>
-          <p>Advanced AI-powered macro for BSS</p>
-          <a href="#" class="btn">Learn More</a>
-        </div>
-    </div>
+    <section class="project-section" id="pathmaker">
+      <div class="project-content">
+        <h2>PathMaker</h2>
+        <p>An innovative tool for path creation and optimization, built online</p>
+        <a href="https://pathmaker.slymi.org/" class="btn" target="_blank">View Project</a>
+      </div>
+    </section>
+    
+    <section class="project-section" id="bss-guides">
+      <div class="project-content">
+        <h2>BSS Guides</h2>
+        <p>Many Guides i made alone or with help from others for BSS.</p>
+        <a href="#guides" class="btn">View Guides</a>
+      </div>
+    </section>
+    
+    <section class="project-section" id="github-projects">
+      <div class="project-content">
+        <h2>GitHub Projects</h2>
+        <p>Explore the Projects i published on Github.</p>
+        <a href="https://github.com/CuzImSlymi/" class="btn" target="_blank">View GitHub</a>
+      </div>
+    </section>
+    
+    <section class="project-section" id="ai-macro">
+      <div class="project-content">
+        <h2>AI Macro</h2>
+        <p>Advanced AI-powered macro for BSS</p>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+    </section>
+
 
     <section class="section" id="contact">
       <div class="section-content">
@@ -631,6 +680,30 @@
             offset: 200
           });
         });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+          });
+        });
+
+        const projectSections = document.querySelectorAll('.project-section');
+
+        function checkScroll() {
+          projectSections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            if (sectionTop < windowHeight * 0.75) {
+              section.classList.add('active');
+            }
+          });
+        }
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+        
     </script>
     <footer>
         <div class="footer-container">
