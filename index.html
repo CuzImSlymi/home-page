@@ -409,7 +409,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>    
 
     <section class="section" id="contact">
         <div class="section-content">
@@ -485,13 +485,13 @@
 
             // Parallax effect for background video
             gsap.to("#bg-video", {
-                yPercent: 50,
+                y: () => window.innerHeight * 0.5,
                 ease: "none",
                 scrollTrigger: {
                     trigger: "body",
                     start: "top top",
-                    end: "bottom top",
-                    scrub: true
+                    end: "bottom bottom",
+                    scrub: 1
                 }
             });
 
