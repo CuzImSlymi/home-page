@@ -193,14 +193,26 @@
             display: flex;
             align-items: center;
             gap: 4rem;
-            opacity: 0;
-            transform: translateX(-100px);
+            opacity: 1; /* Changed from 0 to 1 */
+            transform: translateX(0); /* Reset initial transform */
             transition: all 0.5s ease-out;
         }
 
+        .project-item.animate {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+
+        .project-item:nth-child(even).animate {
+            transform: translateX(100px);
+        }
+
+        .project-item.animate.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
         .project-item:nth-child(even) {
             flex-direction: row-reverse;
-            transform: translateX(100px);
         }
 
         .project-item.active {
@@ -449,17 +461,6 @@
 
             // Project sections scroll effect
             const projectItems = document.querySelectorAll('.project-item');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            projectItems.forEach(item => {
-                observer.observe(item);
-            });
 
             // AOS initialization
             AOS.init({
