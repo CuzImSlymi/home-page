@@ -357,7 +357,11 @@
           height: 200px;
           object-fit: cover;
           border-radius: 10px 10px 0 0;
-          margin-bottom: 1rem;
+          transition: transform 0.3s ease;
+        }
+        
+        .project-image:hover {
+          transform: scale(1.05);
         }
 
         @keyframes fadeInUp {
