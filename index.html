@@ -3,26 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore Slymi's portfolio of web development, AI, and game design projects. Discover insightful guides and innovative creations in this unique developer showcase.">
-    <meta name="keywords" content="Slymi, developer, portfolio, web development, AI">
-    <link rel="canonical" href="https://slymi.org/" />
     <title>Slymi's Developer Portfolio</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
 
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
-            --text-color: #ecf0f1;
-            --background-color: rgba(0, 0, 0, 0.9);
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --text-color: #ffffff;
+            --background-color: #0a0a0a;
             --section-padding: 5rem 2rem;
         }
 
@@ -37,14 +29,10 @@
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Poppins', sans-serif;
             color: var(--text-color);
             line-height: 1.6;
-            background-color: #000;
-        }
-
-        html {
-          scroll-behavior: smooth;
+            background-color: var(--background-color);
         }
 
         #bg-video {
@@ -56,7 +44,7 @@
             width: auto;
             height: auto;
             z-index: -1;
-            filter: brightness(40%);
+            filter: brightness(30%);
             object-fit: cover;
         }
 
@@ -64,7 +52,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(10px);
             z-index: 1000;
             padding: 1rem;
@@ -134,7 +122,7 @@
 
         .section {
             padding: var(--section-padding);
-            min-height: 80vh; 
+            min-height: 80vh;
             display: flex;
             align-items: center;
             position: relative;
@@ -146,248 +134,42 @@
             width: 100%;
         }
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+        .project-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
         }
 
-        .project-card {
-            background: rgba(255, 255, 255, 0.1);
+        .project-item {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .project-item.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-text {
+            flex: 1;
+        }
+
+        .project-image img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
             border-radius: 10px;
-            padding: 1.5rem;
             transition: transform 0.3s ease;
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
+        .project-image img:hover {
+            transform: scale(1.05);
         }
 
-        .project-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .skill-category {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 1.5rem;
-        }
-
-        .skill-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        .skill-list li {
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .skill-list li::before {
-            content: "•";
-            color: var(--primary-color);
-            margin-right: 0.5rem;
-        }
-
-        .guides-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .guide-category {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 1.5rem;
-        }
-        
-        .guide-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-        
-        .guide-list li {
-            margin-bottom: 1rem;
-        }
-        
-        .guide-list a {
-            color: var(--text-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            display: block;
-            padding: 0.5rem;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .guide-list a:hover {
-            color: var(--primary-color);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .popup {
-            display: none;
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.8);
-        }
-        
-        .popup-content {
-            background-color: var(--background-color);
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid var(--primary-color);
-            width: 80%;
-            max-width: 800px;
-            border-radius: 10px;
-        }
-        
-        .close {
-            color: var(--text-color);
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .close:hover,
-        .close:focus {
-            color: var(--primary-color);
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .project-section {
-          height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-attachment: fixed;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-          position: relative;
-        }
-        
-        .project-content {
-          background: rgba(0, 0, 0, 0.7);
-          padding: 2rem;
-          border-radius: 10px;
-          text-align: center;
-          max-width: 600px;
-          width: 90%;
-          transform: translateY(50px);
-          opacity: 0;
-          transition: all 0.5s ease-out;
-        }
-
-        .project-section.active .project-content {
-          transform: translateY(0);
-          opacity: 1;
-        }
-
-        .project-container {
-          display: flex;
-          flex-direction: column;
-          gap: 4rem;
-        }
-        
-        .project-item {
-          display: flex;
-          align-items: center;
-          gap: 2rem;
-        }
-        
-        .project-text {
-          flex: 1;
-        }
-        
-        .project-image img {
-          width: 300px;
-          height: 300px;
-          object-fit: cover;
-          border-radius: 10px;
-        }
-        
-        #pathmaker {
-          background-image: url('pathmaker-bg.jpg');
-        }
-        
-        #bss-guides {
-          background-image: url('bss-guides-bg.jpg');
-        }
-        
-        #github-projects {
-          background-image: url('github-projects-bg.jpg');
-        }
-        
-        #ai-macro {
-          background-image: url('ai-macro-bg.jpg');
-        }
-
-        .contact-form {
-            max-width: 600px;
-            margin: 2rem auto;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 10px;
-        }
-
-        .form-group {
-            margin-bottom: 1rem; 
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.8rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            color: var(--text-color);
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .form-status {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 5px;
-            display: none;
-        }
-
-        .form-status.success {
-            background: rgba(46, 204, 113, 0.2);
-            color: #2ecc71;
-            display: block;
-        }
-
-        .form-status.error {
-            background: rgba(231, 76, 60, 0.2);
-            color: #e74c3c;
-            display: block;
-        }
-        
         .btn {
             display: inline-block;
             padding: 1rem 2rem;
@@ -421,18 +203,6 @@
             color: var(--primary-color);
         }
 
-        .project-image {
-          width: 100%;
-          height: 200px;
-          object-fit: cover;
-          border-radius: 10px 10px 0 0;
-          transition: transform 0.3s ease;
-        }
-        
-        .project-image:hover {
-          transform: scale(1.05);
-        }
-
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -448,9 +218,12 @@
             .hero h1 {
                 font-size: 3rem;
             }
-
             .nav-links {
                 display: none;
+            }
+            .project-item {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -509,71 +282,52 @@
     </section>
 
     <section class="section" id="projects">
-      <div class="section-content">
-        <h2>Featured Projects</h2>
-        <div class="project-container">
-          <div class="project-item">
-            <div class="project-text">
-              <h3>BSS Guides</h3>
-              <p>Many Guides i made alone or with help from others for BSS.</p>
-              <a href="#" class="btn" id="bssGuidesBtn">View Guides</a>
+        <div class="section-content">
+            <h2>Featured Projects</h2>
+            <div class="project-container">
+                <div class="project-item">
+                    <div class="project-text">
+                        <h3>AI Macro</h3>
+                        <p>An innovative AI-powered macro system for automation tasks.</p>
+                        <a href="https://discord.gg/bJdqpTwska" class="btn" target="_blank">Join Discord</a>
+                    </div>
+                    <div class="project-image">
+                        <img src="ai-macro.png" alt="AI Macro" width="300" height="300">
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-text">
+                        <h3>GitHub Projects</h3>
+                        <p>Explore the projects I've published on GitHub.</p>
+                        <a href="https://github.com/CuzImSlymi/" class="btn" target="_blank">View GitHub</a>
+                    </div>
+                    <div class="project-image">
+                        <img src="github-projects.png" alt="GitHub Projects" width="300" height="300">
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-text">
+                        <h3>BSS Guides</h3>
+                        <p>Comprehensive guides I've created for BSS, alone or with help from others.</p>
+                        <a href="#" class="btn" id="bssGuidesBtn">View Guides</a>
+                    </div>
+                    <div class="project-image">
+                        <img src="bss-guides.png" alt="BSS Guides" width="300" height="300">
+                    </div>
+                </div>
             </div>
-            <div class="project-image">
-              <img src="bss-guides.jpg" alt="BSS Guides" width="300" height="300">
-            </div>
-          </div>
-          <div class="project-item">
-            <div class="project-text">
-              <h3>GitHub Projects</h3>
-              <p>Explore the Projects i published on Github.</p>
-              <a href="https://github.com/CuzImSlymi/" class="btn" target="_blank">View GitHub</a>
-            </div>
-            <div class="project-image">
-              <img src="github-projects.jpg" alt="GitHub Projects" width="300" height="300">
-            </div>
-          </div>
         </div>
-      </div>
     </section>
 
     <section class="section" id="contact">
-      <div class="section-content">
-        <h2>Get in Touch</h2>
-        <p>If you have any questions or want to chat, feel free to reach out to me on Discord:</p>
-        <p><strong>Discord Username:</strong> slymih</p>
-        <p>I'm looking forward to meet you!</p>
-        <div class="social-links">
-          <a href="https://github.com/CuzImSlymi/" target="_blank">GitHub</a>
-          <a href="https://discordapp.com/users/489797963481219087" target="_blank">Discord Profile</a>
-        </div>
-      </div>
-    </section>
-    
-        <div id="guidesPopup" class="popup">
-            <div class="popup-content">
-                <span class="close">&times;</span>
-                <h2>BSS Guides</h2>
-                <div class="guides-container">
-                    <div class="guide-category">
-                        <h3>General Guides</h3>
-                        <ul class="guide-list">
-                            <li><a href="https://docs.google.com/document/d/1F__gdRy8UmTjdg7itpSTPjKu4TTvQ2JHK_kDTlSEy0Y/edit?tab=t.0#heading=h.r2sjm5jrvup7" target="_blank">RDP Guide</a></li>
-                            <li><a href="https://docs.google.com/document/d/1Tz_tIuQpJXcYNL3WQFO-w6ZEEkLQPu-V4nzHDga2CzU/edit?tab=t.0" target="_blank">Fuzzy Alt Guide</a></li>
-                            <li><a href="https://docs.google.com/document/d/1eeCIuP8RyzoT_XLcvRayihNy3-3MOxlfLb2c4qfb0_s/edit?tab=t.0" target="_blank">Tad Alt Guide</a></li>
-                            <li><a href="https://docs.google.com/document/d/1RE5DusE9rio6bnfdw65ghfdWX9LMsCWvk-Mo0OizqLc/edit?tab=t.0#heading=h.1gkfjvgl7jcb" target="_blank">Alt Progression Guide</a></li>
-                            <li><a href="https://docs.google.com/document/d/1hT6AuKwUR0pYPGOEfjzre-AKb23iJR8IqtXN4MsCZ80/edit?usp=sharing" target="_blank">Beequip & Wax Guide</a></li>
-                        </ul>
-                    </div>
-                    <div class="guide-category">
-                        <h3>Specialized Guides</h3>
-                        <ul class="guide-list">
-                            <li><a href="https://docs.google.com/document/d/1ja1AjqjfyVKIYLkfkhpZNklOqrSe0udoI2nP6buyp2Y/edit?tab=t.0#heading=h.naocuarx61v4" target="_blank">Blue Hive Guide</a></li>
-                            <li><a href="https://docs.google.com/document/d/1jTMMhY-LaK2CsfRQauOmN8IfdsT53tbeh3LySd4sHao/edit?tab=t.0#heading=h.7y836563ws81" target="_blank">No Haste Guide</a></li>
-                            <li><a href="https://docs.google.com/document/d/1K2I-Q2hqYCDBHFkPl00fRVeN_DsMCBC-NIMyyVJE-cU/edit" target="_blank">Honeyday Guide</a></li>
-                            <li><a href="https://docs.google.com/document/d/1cYUB0-0nYUduTJXpZixF2hAGJYlC24cMQ2N-ugZEyqE/edit?tab=t.0#heading=h.9ojoa7ar9ouw" target="_blank">White Hive Guide</a></li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="section-content">
+            <h2>Get in Touch</h2>
+            <p>If you have any questions or want to chat, feel free to reach out to me on Discord:</p>
+            <p><strong>Discord Username:</strong> slymih</p>
+            <p>I'm looking forward to meeting you!</p>
+            <div class="social-links">
+                <a href="https://github.com/CuzImSlymi/" target="_blank">GitHub</a>
+                <a href="https://discordapp.com/users/489797963481219087" target="_blank">Discord Profile</a>
             </div>
         </div>
     </section>
@@ -589,133 +343,39 @@
                     navbar.classList.remove('scrolled');
                 }
             });
-        
+
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
                     const target = document.querySelector(this.getAttribute('href'));
                     if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth'
-                        });
+                        target.scrollIntoView({ behavior: 'smooth' });
                     }
                 });
             });
-        
-            // Form submission function
-            async function submitForm() {
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const message = document.getElementById('message').value;
-                
-                if (!name || !message) {
-                    showStatus('Please fill in all fields', 'error');
-                    return;
-                }
-        
-                const webhookURL = 'https://discord.com/api/webhooks/1322164968648474685/eDifwxvdGYQ3obyu-D6Nm4n6nt4WW0KZTbVAGYEgk3Q_J8GffTf19fAlQnWmoWigaKgS';
-        
-                const payload = {
-                    embeds: [{
-                        title: 'New Portfolio Message',
-                        color: 3447003,
-                        fields: [
-                            { name: 'Name', value: name, inline: true },
-                            { name: 'Email', value: email, inline: true },
-                            { name: 'Message', value: message }
-                        ],
-                        timestamp: new Date()
-                    }]
-                };
-        
-                try {
-                    const response = await fetch(webhookURL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(payload)
-                    });
-        
-                    if (response.ok) {
-                        showStatus('Message sent successfully!', 'success');
-                        document.getElementById('name').value = '';
-                        document.getElementById('email').value = '';
-                        document.getElementById('message').value = '';
-                    } else {
-                        showStatus('Failed to send message. Please try again.', 'error');
-                    }
-                } catch (error) {
-                    showStatus('An error occurred. Please try again later.', 'error');
-                }
-            }
-        
-            function showStatus(message, type) {
-                const statusDiv = document.getElementById('formStatus');
-                statusDiv.textContent = message;
-                statusDiv.className = `form-status ${type}`;
-                setTimeout(() => {
-                    statusDiv.className = 'form-status';
-                }, 5000);
-            }
-        
-            window.submitForm = submitForm;
-        
-            // Guides popup functionality
-            const guidesPopup = document.getElementById('guidesPopup');
-            const bssGuidesBtn = document.querySelector('.project-card a[href="#guides"]');
-            const closeBtn = guidesPopup.querySelector('.close');
-        
-            if (bssGuidesBtn && guidesPopup) {
-                bssGuidesBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    guidesPopup.style.display = 'block';
-                });
-        
-                closeBtn.addEventListener('click', function() {
-                    guidesPopup.style.display = 'none';
-                });
-        
-                window.addEventListener('click', function(e) {
-                    if (e.target === guidesPopup) {
-                        guidesPopup.style.display = 'none';
-                    }
-                });
-            }
-        
-            // AOS initialization
-            if (typeof AOS !== 'undefined') {
-                AOS.init({
-                    duration: 1000,
-                    once: true,
-                    offset: 200
-                });
-            }
-        
-            // Project sections scroll effect
-            const projectSections = document.querySelectorAll('.project-section');
-        
-            function checkScroll() {
-                projectSections.forEach(section => {
-                    const sectionTop = section.getBoundingClientRect().top;
-                    const windowHeight = window.innerHeight;
-                    if (sectionTop < windowHeight * 0.75) {
-                        section.classList.add('active');
-                    }
-                });
-            }
-        
-            window.addEventListener('scroll', checkScroll);
-            window.addEventListener('load', checkScroll);
-        });
 
+            // Project sections scroll effect
+            const projectItems = document.querySelectorAll('.project-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            projectItems.forEach(item => {
+                observer.observe(item);
+            });
+
+            // AOS initialization
+            AOS.init({
+                duration: 1000,
+                once: true,
+                offset: 200
+            });
+        });
     </script>
-    <footer>
-        <div class="footer-container">
-            <p>&copy; 2024 Slymi's Developer Portfolio. All rights reserved.</p>
-            <a href="privacy-policy.html" class="footer-link">Data Policy</a>
-        </div>
-    </footer>
 </body>
 </html>
