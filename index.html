@@ -224,6 +224,10 @@
             flex: 1;
         }
 
+        .project-text p {
+            margin-bottom: 2rem;
+        }
+
         .project-image img {
             width: 450px;
             height: 550px;
@@ -438,7 +442,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Navbar scroll effect
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
                 if (window.scrollY > 50) {
@@ -448,7 +451,6 @@
                 }
             });
 
-            // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -459,17 +461,15 @@
                 });
             });
 
-            // Project sections scroll effect
             const projectItems = document.querySelectorAll('.project-item');
 
-            // AOS initialization
             AOS.init({
                 duration: 1000,
                 once: true,
                 offset: 200
             });
 
-            // Hamburger menu functionality
+            // Hamburger menu
             const hamburger = document.querySelector('.hamburger');
             const navLinks = document.querySelector('.nav-links');
 
@@ -477,14 +477,12 @@
                 navLinks.classList.toggle('active');
             });
 
-            // Close mobile menu when a link is clicked
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.addEventListener('click', () => {
                     navLinks.classList.remove('active');
                 });
             });
 
-            // Project items animation
             gsap.utils.toArray('.project-item').forEach((item, index) => {
                 gsap.from(item, {
                     x: index % 2 === 0 ? -100 : 100,
@@ -499,7 +497,23 @@
                 });
             });
 
-            // BSS Guides button functionality
+            document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('bg-video');
+            
+            video.addEventListener('timeupdate', function() {
+                if (video.currentTime >= video.duration - 0.5) {
+                    video.style.transition = "transform 0.5s ease-out";
+                    video.playbackRate = -1;
+                    video.play();
+                }
+                
+                if (video.currentTime <= 0.1) {
+                    video.style.transition = "transform 0.5s ease-out";
+                    video.playbackRate = 1;
+                    video.play();
+                }
+            });
+
             const bssGuidesBtn = document.getElementById('bssGuidesBtn');
             bssGuidesBtn.addEventListener('click', (e) => {
                 e.preventDefault();
