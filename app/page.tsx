@@ -23,6 +23,8 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen bg-gray-900 overflow-x-hidden">
+      {/* Version Check - v1 */}
+      <div style={{position: 'fixed', top: 0, right: 0, background: 'red', color: 'white', padding: '5px', zIndex: 9999}}>v1</div>
       <DynamicBackground />
       <Navbar />
       
