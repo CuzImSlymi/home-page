@@ -264,7 +264,7 @@ export default function Projects() {
                       }}
                     >
                       <img 
-                        src="/home-page/calorieai-mobile-app.png" 
+                        src="/calorieai-mobile-app.png" 
                         alt="CalorieAI Mobile App Interface"
                         className="w-full h-auto object-cover rounded-[2rem]"
                       />
@@ -284,7 +284,7 @@ export default function Projects() {
                     // Desktop App Screenshot
                     <div className="relative max-w-4xl mx-auto">
                       <img 
-                        src="/home-page/whisperlink-desktop-app.png" 
+                        src="/whisperlink-desktop-app.png" 
                         alt="WhisperLink Desktop Application"
                         className="w-full h-auto object-contain rounded-xl shadow-2xl transition-all duration-300 ease-out"
                         style={{
@@ -315,7 +315,7 @@ export default function Projects() {
                           `
                         }}
                       >
-                        <source src="/home-page/bss-ai-demo-compressed.mp4" type="video/mp4" />
+                        <source src="/bss-ai-demo-compressed.mp4" type="video/mp4" />
                         {/* Fallback */}
                         <div className="flex items-center justify-center h-full bg-gradient-to-br from-gray-800 to-gray-900">
                           <div className="text-center space-y-4">
