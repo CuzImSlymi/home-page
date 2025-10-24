@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
   images: {
-    domains: ['images.unsplash.com', 'picsum.photos'],
+    unoptimized: true
   },
 }
 
