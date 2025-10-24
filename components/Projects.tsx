@@ -190,9 +190,12 @@ export default function Projects() {
           case '2':
           case '3':
           case '4':
+          case '5':
             event.preventDefault()
             const projectIndex = parseInt(event.key) - 1
-            navigateToProject(projectIndex)
+            if (projectIndex >= 0 && projectIndex < projects.length) {
+              navigateToProject(projectIndex)
+            }
             break
         }
       }
@@ -227,6 +230,10 @@ export default function Projects() {
       
       // Set initial position based on calculated progress
       gsap.set(sections, { xPercent: -100 * (sections.length - 1) * initialProgress })
+      
+      // Set initial current project based on progress
+      const initialProjectIndex = Math.round(initialProgress * (projects.length - 1))
+      setCurrentProject(initialProjectIndex)
 
       // Official GSAP horizontal scrolling pattern with smart initialization
       const tl = gsap.to(sections, {
@@ -242,10 +249,18 @@ export default function Projects() {
             delay: 0.1
           },
           end: () => `+=${sections.length * window.innerHeight}`,
+          onUpdate: (self) => {
+            // Update current project based on scroll progress
+            const progress = self.progress
+            const newProjectIndex = Math.round(progress * (projects.length - 1))
+            setCurrentProject(newProjectIndex)
+          },
           onRefresh: () => {
             // Recalculate on refresh/resize
             initialProgress = getInitialProgress()
             gsap.set(sections, { xPercent: -100 * (sections.length - 1) * initialProgress })
+            const newProjectIndex = Math.round(initialProgress * (projects.length - 1))
+            setCurrentProject(newProjectIndex)
           },
           onToggle: (self) => {
             // Handle entering from different directions
@@ -254,6 +269,8 @@ export default function Projects() {
               if (Math.abs(newProgress - initialProgress) > 0.1) {
                 gsap.set(sections, { xPercent: -100 * (sections.length - 1) * newProgress })
                 initialProgress = newProgress
+                const newProjectIndex = Math.round(newProgress * (projects.length - 1))
+                setCurrentProject(newProjectIndex)
               }
             }
           }
@@ -267,7 +284,7 @@ export default function Projects() {
       }
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [])
+  }, [currentProject])
 
   const ProjectSection = ({ project, index }: { project: typeof projects[0], index: number }) => {
     const IconComponent = project.icon
