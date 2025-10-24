@@ -14,6 +14,7 @@ if (typeof window !== 'undefined') {
 
 export default function Projects() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [currentProject, setCurrentProject] = useState(0)
 
   const projects = [
     {
@@ -137,6 +138,62 @@ export default function Projects() {
 
     const container = containerRef.current
     const sections = Array.from(container.querySelectorAll('.project-section'))
+
+    // Keyboard navigation function
+    const navigateToProject = (index: number) => {
+      if (index < 0 || index >= projects.length) return
+      
+      setCurrentProject(index)
+      const progress = index / (projects.length - 1)
+      
+      // Smoothly animate to the target project
+      gsap.to(sections, {
+        xPercent: -100 * (sections.length - 1) * progress,
+        duration: 0.8,
+        ease: "power2.out"
+      })
+    }
+
+    // Keyboard event handler
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Only handle keyboard when projects section is in view
+      const rect = container.getBoundingClientRect()
+      const isInView = rect.top <= window.innerHeight && rect.bottom >= 0
+      
+      if (!isInView) return
+
+      switch (event.key) {
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          event.preventDefault()
+          navigateToProject(currentProject - 1)
+          break
+        case 'ArrowRight':
+        case 'ArrowDown':
+          event.preventDefault()
+          navigateToProject(currentProject + 1)
+          break
+        case 'Home':
+          event.preventDefault()
+          navigateToProject(0)
+          break
+        case 'End':
+          event.preventDefault()
+          navigateToProject(projects.length - 1)
+          break
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+          event.preventDefault()
+          const projectIndex = parseInt(event.key) - 1
+          navigateToProject(projectIndex)
+          break
+      }
+    }
+
+    // Add keyboard event listener
+    window.addEventListener('keydown', handleKeyDown)
     
     if (ScrollTrigger && sections.length > 0) {
       // Determine initial position based on scroll direction and page load
@@ -202,6 +259,7 @@ export default function Projects() {
       if (ScrollTrigger) {
         ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill())
       }
+      window.removeEventListener('keydown', handleKeyDown)
     }
   }, [])
 
@@ -508,7 +566,7 @@ export default function Projects() {
               transition={{ duration: 2, repeat: Infinity }}
               className="text-gray-400 flex items-center space-x-2"
             >
-              <span className="text-sm">Scroll to snap between projects</span>
+              <span className="text-sm">Use arrow keys or scroll to navigate projects</span>
               <div className="w-4 h-4 border-r-2 border-b-2 border-gray-400 transform rotate-45"></div>
             </motion.div>
           </div>
