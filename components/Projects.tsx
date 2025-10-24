@@ -162,33 +162,39 @@ export default function Projects() {
       
       if (!isInView) return
 
-      switch (event.key) {
-        case 'ArrowLeft':
-        case 'ArrowUp':
-          event.preventDefault()
-          navigateToProject(currentProject - 1)
-          break
-        case 'ArrowRight':
-        case 'ArrowDown':
-          event.preventDefault()
-          navigateToProject(currentProject + 1)
-          break
-        case 'Home':
-          event.preventDefault()
-          navigateToProject(0)
-          break
-        case 'End':
-          event.preventDefault()
-          navigateToProject(projects.length - 1)
-          break
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-          event.preventDefault()
-          const projectIndex = parseInt(event.key) - 1
-          navigateToProject(projectIndex)
-          break
+      // Check both event.key and event.code for better compatibility
+      const isLeftArrow = event.key === 'ArrowLeft' || event.code === 'ArrowLeft' || event.keyCode === 37
+      const isRightArrow = event.key === 'ArrowRight' || event.code === 'ArrowRight' || event.keyCode === 39
+      const isUpArrow = event.key === 'ArrowUp' || event.code === 'ArrowUp' || event.keyCode === 38
+      const isDownArrow = event.key === 'ArrowDown' || event.code === 'ArrowDown' || event.keyCode === 40
+
+      if (isLeftArrow || isUpArrow) {
+        event.preventDefault()
+        event.stopPropagation()
+        navigateToProject(currentProject - 1)
+      } else if (isRightArrow || isDownArrow) {
+        event.preventDefault()
+        event.stopPropagation()
+        navigateToProject(currentProject + 1)
+      } else {
+        switch (event.key) {
+          case 'Home':
+            event.preventDefault()
+            navigateToProject(0)
+            break
+          case 'End':
+            event.preventDefault()
+            navigateToProject(projects.length - 1)
+            break
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+            event.preventDefault()
+            const projectIndex = parseInt(event.key) - 1
+            navigateToProject(projectIndex)
+            break
+        }
       }
     }
 
