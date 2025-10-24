@@ -1,6 +1,6 @@
 # AI Developer Portfolio
 
-A stunning, modern portfolio website for an AI developer and systems architect built with Next.js, featuring glassmorphism design, dynamic backgrounds, and smooth animations.
+A modern, responsive portfolio website showcasing AI development and software engineering projects.
 
 ## 🚀 Features
 
