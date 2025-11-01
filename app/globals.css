@@ -248,6 +248,31 @@ button {
   }
 }
 
+/* Horizontal scroll panels */
+.full-screen {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#projects #projects-container {
+  height: 100vh;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0;
+  overflow: hidden;
+}
+
+#projects #projects-container .panel {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  text-align: left;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   * {

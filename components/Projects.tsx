@@ -137,7 +137,7 @@ export default function Projects() {
     if (!containerRef.current || !ScrollTrigger) return
 
     const panelsContainer = containerRef.current
-    const panels = gsap.utils.toArray('.project-section')
+    const panels = gsap.utils.toArray("#projects-container .panel")
 
     if (panels.length === 0) return
 
@@ -145,7 +145,7 @@ export default function Projects() {
       xPercent: -100 * (panels.length - 1),
       ease: "none",
       scrollTrigger: {
-        trigger: panelsContainer,
+        trigger: "#projects-container",
         pin: true,
         start: "top top",
         scrub: 1,
@@ -154,12 +154,7 @@ export default function Projects() {
           inertia: false,
           duration: { min: 0.1, max: 0.1 }
         },
-        end: () => "+=" + (panelsContainer.offsetWidth - window.innerWidth),
-        onUpdate: (self) => {
-          const progress = self.progress
-          const projectIndex = Math.round(progress * (projects.length - 1))
-          setCurrentProject(projectIndex)
-        }
+        end: () => "+=" + (panelsContainer.offsetWidth - window.innerWidth)
       }
     })
 
@@ -189,7 +184,7 @@ export default function Projects() {
     }
 
     return (
-      <div className="project-section h-screen flex-shrink-0 relative overflow-hidden" style={{ width: `${100 / projects.length}%` }}>
+      <div className="project-section panel full-screen relative overflow-hidden">
         {/* Animated Background */}
         <div 
           className={`absolute inset-0 bg-gradient-to-br ${project.theme.bg}`}
@@ -480,10 +475,10 @@ export default function Projects() {
       </section>
 
       {/* Horizontal Projects Section */}
-      <section id="projects" className="relative overflow-hidden">
+      <section id="projects">
         <div 
           ref={containerRef}
-          className="flex h-screen overflow-hidden"
+          id="projects-container"
           style={{ width: `${projects.length * 100}%` }}
         >
           {projects.map((project, index) => (
