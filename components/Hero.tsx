@@ -9,7 +9,7 @@ export default function Hero() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 100)
+      setScrolled(window.scrollY > 50)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -18,7 +18,7 @@ export default function Hero() {
 
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6 pt-16">
+    <section className="relative min-h-screen flex items-center justify-center px-6 pt-8">
       <div className="max-w-6xl mx-auto text-center space-y-8">
         
         {/* Main Content */}
@@ -28,17 +28,6 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="space-y-6"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="inline-flex items-center space-x-2 text-gray-400 bg-gray-800/50 px-4 py-2 rounded-full border border-gray-700/50"
-          >
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-            <span className="text-sm font-medium">
-              Available for interesting projects
-            </span>
-          </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -58,7 +47,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.8 }}
             className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
           >
-            Custom YOLO models, P2P messengers, mobile apps, and language model experiments. Building stuff that works instead of just looking impressive.
+            Crafting intelligent solutions with passion. From computer vision to real-time communication, every project is built with care and attention to detail.
           </motion.p>
 
           <motion.div
@@ -89,24 +78,23 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      {!scrolled && (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: scrolled ? 0 : 1 }}
+        transition={{ duration: 0.3 }}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none"
+        style={{ pointerEvents: scrolled ? 'none' : 'auto' }}
+      >
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 2 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="flex flex-col items-center space-y-2 text-gray-400 cursor-pointer"
+          onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center space-y-2 text-gray-400 cursor-pointer"
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            <span className="text-sm">Scroll to explore</span>
-            <ChevronDown size={20} />
-          </motion.div>
+          <span className="text-sm">Scroll to explore</span>
+          <ChevronDown size={20} />
         </motion.div>
-      )}
+      </motion.div>
     </section>
   )
 }
