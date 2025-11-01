@@ -165,10 +165,28 @@ export default function Projects() {
 
       if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
         event.preventDefault()
-        navigateToProject(currentProject - 1)
+        setCurrentProject(prev => {
+          const newIndex = Math.max(0, prev - 1)
+          const progress = newIndex / (projects.length - 1)
+          gsap.to(sections, {
+            xPercent: -100 * (sections.length - 1) * progress,
+            duration: 0.8,
+            ease: "power2.out"
+          })
+          return newIndex
+        })
       } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
         event.preventDefault()
-        navigateToProject(currentProject + 1)
+        setCurrentProject(prev => {
+          const newIndex = Math.min(projects.length - 1, prev + 1)
+          const progress = newIndex / (projects.length - 1)
+          gsap.to(sections, {
+            xPercent: -100 * (sections.length - 1) * progress,
+            duration: 0.8,
+            ease: "power2.out"
+          })
+          return newIndex
+        })
       }
     }
 
