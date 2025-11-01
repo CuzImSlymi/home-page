@@ -143,7 +143,6 @@ export default function Projects() {
     const navigateToProject = (index: number) => {
       if (index < 0 || index >= projects.length) return
       
-      setCurrentProject(index)
       const progress = index / (projects.length - 1)
       
       // Smoothly animate to the target project
@@ -152,6 +151,8 @@ export default function Projects() {
         duration: 0.8,
         ease: "power2.out"
       })
+      
+      setCurrentProject(index)
     }
 
     // Keyboard event handler
