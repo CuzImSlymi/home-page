@@ -189,7 +189,7 @@ export default function Projects() {
     }
 
     return (
-      <div className="project-section h-screen w-screen flex-shrink-0 relative overflow-hidden">
+      <div className="project-section h-screen flex-shrink-0 relative overflow-hidden" style={{ width: `${100 / projects.length}%` }}>
         {/* Animated Background */}
         <div 
           className={`absolute inset-0 bg-gradient-to-br ${project.theme.bg}`}
@@ -480,8 +480,12 @@ export default function Projects() {
       </section>
 
       {/* Horizontal Projects Section */}
-      <section id="projects" ref={containerRef} className="relative overflow-hidden">
-        <div className="flex h-screen w-max">
+      <section id="projects" className="relative overflow-hidden">
+        <div 
+          ref={containerRef}
+          className="flex h-screen overflow-hidden"
+          style={{ width: `${projects.length * 100}%` }}
+        >
           {projects.map((project, index) => (
             <ProjectSection key={project.title} project={project} index={index} />
           ))}
