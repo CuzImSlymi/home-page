@@ -162,42 +162,12 @@ export default function Projects() {
       
       if (!isInView) return
 
-      // Check both event.key and event.code for better compatibility
-      const isLeftArrow = event.key === 'ArrowLeft' || event.code === 'ArrowLeft' || event.keyCode === 37
-      const isRightArrow = event.key === 'ArrowRight' || event.code === 'ArrowRight' || event.keyCode === 39
-      const isUpArrow = event.key === 'ArrowUp' || event.code === 'ArrowUp' || event.keyCode === 38
-      const isDownArrow = event.key === 'ArrowDown' || event.code === 'ArrowDown' || event.keyCode === 40
-
-      if (isLeftArrow || isUpArrow) {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
         event.preventDefault()
-        event.stopPropagation()
         navigateToProject(currentProject - 1)
-      } else if (isRightArrow || isDownArrow) {
+      } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
         event.preventDefault()
-        event.stopPropagation()
         navigateToProject(currentProject + 1)
-      } else {
-        switch (event.key) {
-          case 'Home':
-            event.preventDefault()
-            navigateToProject(0)
-            break
-          case 'End':
-            event.preventDefault()
-            navigateToProject(projects.length - 1)
-            break
-          case '1':
-          case '2':
-          case '3':
-          case '4':
-          case '5':
-            event.preventDefault()
-            const projectIndex = parseInt(event.key) - 1
-            if (projectIndex >= 0 && projectIndex < projects.length) {
-              navigateToProject(projectIndex)
-            }
-            break
-        }
       }
     }
 
@@ -205,38 +175,8 @@ export default function Projects() {
     window.addEventListener('keydown', handleKeyDown)
     
     if (ScrollTrigger && sections.length > 0) {
-      // Determine initial position based on scroll direction and page load
-      const getInitialProgress = () => {
-        const containerTop = container.offsetTop
-        const containerHeight = container.offsetHeight
-        const currentScroll = window.scrollY
-        
-        // If loading at bottom of page or scrolling up from below
-        if (currentScroll > containerTop + containerHeight) {
-          return 1 // Start at last project
-        }
-        // If at top or scrolling down from above
-        else if (currentScroll < containerTop) {
-          return 0 // Start at first project
-        }
-        // If in middle, calculate based on position
-        else {
-          const progress = (currentScroll - containerTop) / containerHeight
-          return Math.max(0, Math.min(1, progress))
-        }
-      }
-
-      let initialProgress = getInitialProgress()
-      
-      // Set initial position based on calculated progress
-      gsap.set(sections, { xPercent: -100 * (sections.length - 1) * initialProgress })
-      
-      // Set initial current project based on progress
-      const initialProjectIndex = Math.round(initialProgress * (projects.length - 1))
-      setCurrentProject(initialProjectIndex)
-
-      // Official GSAP horizontal scrolling pattern with smart initialization
-      const tl = gsap.to(sections, {
+      // Simple horizontal scrolling setup
+      gsap.to(sections, {
         xPercent: -100 * (sections.length - 1),
         ease: "none",
         scrollTrigger: {
@@ -245,33 +185,15 @@ export default function Projects() {
           scrub: 1,
           snap: {
             snapTo: 1 / (sections.length - 1),
-            duration: 0.5,
+            duration: 0.3,
             delay: 0.1
           },
           end: () => `+=${sections.length * window.innerHeight}`,
           onUpdate: (self) => {
-            // Update current project based on scroll progress
             const progress = self.progress
             const newProjectIndex = Math.round(progress * (projects.length - 1))
-            setCurrentProject(newProjectIndex)
-          },
-          onRefresh: () => {
-            // Recalculate on refresh/resize
-            initialProgress = getInitialProgress()
-            gsap.set(sections, { xPercent: -100 * (sections.length - 1) * initialProgress })
-            const newProjectIndex = Math.round(initialProgress * (projects.length - 1))
-            setCurrentProject(newProjectIndex)
-          },
-          onToggle: (self) => {
-            // Handle entering from different directions
-            if (self.isActive) {
-              const newProgress = getInitialProgress()
-              if (Math.abs(newProgress - initialProgress) > 0.1) {
-                gsap.set(sections, { xPercent: -100 * (sections.length - 1) * newProgress })
-                initialProgress = newProgress
-                const newProjectIndex = Math.round(newProgress * (projects.length - 1))
-                setCurrentProject(newProjectIndex)
-              }
+            if (newProjectIndex !== currentProject) {
+              setCurrentProject(newProjectIndex)
             }
           }
         }
@@ -284,7 +206,7 @@ export default function Projects() {
       }
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [currentProject])
+  }, [])
 
   const ProjectSection = ({ project, index }: { project: typeof projects[0], index: number }) => {
     const IconComponent = project.icon
