@@ -134,96 +134,38 @@ export default function Projects() {
   ]
 
   useEffect(() => {
-    if (!containerRef.current) return
+    if (!containerRef.current || !ScrollTrigger) return
 
-    const container = containerRef.current
-    const sections = Array.from(container.querySelectorAll('.project-section'))
+    const panelsContainer = containerRef.current
+    const panels = gsap.utils.toArray('.project-section')
 
-    // Keyboard navigation function
-    const navigateToProject = (index: number) => {
-      if (index < 0 || index >= projects.length) return
-      
-      const progress = index / (projects.length - 1)
-      
-      // Smoothly animate to the target project
-      gsap.to(sections, {
-        xPercent: -100 * (sections.length - 1) * progress,
-        duration: 0.8,
-        ease: "power2.out"
-      })
-      
-      setCurrentProject(index)
-    }
+    if (panels.length === 0) return
 
-    // Keyboard event handler
-    const handleKeyDown = (event: KeyboardEvent) => {
-      // Only handle keyboard when projects section is in view
-      const rect = container.getBoundingClientRect()
-      const isInView = rect.top <= window.innerHeight && rect.bottom >= 0
-      
-      if (!isInView) return
-
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-        event.preventDefault()
-        setCurrentProject(prev => {
-          const newIndex = Math.max(0, prev - 1)
-          const progress = newIndex / (projects.length - 1)
-          gsap.to(sections, {
-            xPercent: -100 * (sections.length - 1) * progress,
-            duration: 0.8,
-            ease: "power2.out"
-          })
-          return newIndex
-        })
-      } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-        event.preventDefault()
-        setCurrentProject(prev => {
-          const newIndex = Math.min(projects.length - 1, prev + 1)
-          const progress = newIndex / (projects.length - 1)
-          gsap.to(sections, {
-            xPercent: -100 * (sections.length - 1) * progress,
-            duration: 0.8,
-            ease: "power2.out"
-          })
-          return newIndex
-        })
-      }
-    }
-
-    // Add keyboard event listener
-    window.addEventListener('keydown', handleKeyDown)
-    
-    if (ScrollTrigger && sections.length > 0) {
-      // Simple horizontal scrolling setup
-      gsap.to(sections, {
-        xPercent: -100 * (sections.length - 1),
-        ease: "none",
-        scrollTrigger: {
-          trigger: container,
-          pin: true,
-          scrub: 1,
-          snap: {
-            snapTo: 1 / (sections.length - 1),
-            duration: 0.3,
-            delay: 0.1
-          },
-          end: () => `+=${sections.length * window.innerHeight}`,
-          onUpdate: (self) => {
-            const progress = self.progress
-            const newProjectIndex = Math.round(progress * (projects.length - 1))
-            if (newProjectIndex !== currentProject) {
-              setCurrentProject(newProjectIndex)
-            }
-          }
+    const tween = gsap.to(panels, {
+      xPercent: -100 * (panels.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: panelsContainer,
+        pin: true,
+        start: "top top",
+        scrub: 1,
+        snap: {
+          snapTo: 1 / (panels.length - 1),
+          inertia: false,
+          duration: { min: 0.1, max: 0.1 }
+        },
+        end: () => "+=" + (panelsContainer.offsetWidth - window.innerWidth),
+        onUpdate: (self) => {
+          const progress = self.progress
+          const projectIndex = Math.round(progress * (projects.length - 1))
+          setCurrentProject(projectIndex)
         }
-      })
-    }
+      }
+    })
 
     return () => {
-      if (ScrollTrigger) {
-        ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill())
-      }
-      window.removeEventListener('keydown', handleKeyDown)
+      tween?.kill()
+      ScrollTrigger.getAll().forEach((st: any) => st.kill())
     }
   }, [])
 
