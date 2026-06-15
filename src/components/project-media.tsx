@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { type ProjectMedia as Media } from "@/lib/projects";
 import { CodeBlock } from "@/components/code-block";
 
@@ -8,7 +8,6 @@ import { CodeBlock } from "@/components/code-block";
 // or play while off screen. Pauses again when it leaves the viewport.
 function LazyVideo({ src, poster }: { src: string; poster?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
-  const [inView, setInView] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -16,12 +15,8 @@ function LazyVideo({ src, poster }: { src: string; poster?: string }) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setInView(entry.isIntersecting);
-        if (entry.isIntersecting) {
-          el.play().catch(() => {});
-        } else {
-          el.pause();
-        }
+        if (entry.isIntersecting) el.play().catch(() => {});
+        else el.pause();
       },
       { threshold: 0.25 },
     );
@@ -33,11 +28,10 @@ function LazyVideo({ src, poster }: { src: string; poster?: string }) {
   return (
     <video
       ref={ref}
-      src={inView ? src : undefined}
+      src={src}
       poster={poster}
       muted
       loop
-      autoPlay
       playsInline
       preload="none"
       className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"

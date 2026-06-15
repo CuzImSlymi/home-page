@@ -49,7 +49,8 @@ export const projects: Project[] = [
     linkLabel: "View on GitHub",
     media: {
       type: "video",
-      src: "https://slymi.org/bss-ai-demo-compressed.mp4",
+      src: "/bss-ai-demo.mp4",
+      poster: "/bss-ai-demo-poster.jpg",
     },
   },
   {
