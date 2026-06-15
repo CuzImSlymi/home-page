@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { scrollTo } from "@/lib/lenis";
 
 const links = [
   { label: "Work", href: "#work" },
@@ -19,6 +20,12 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    scrollTo(href);
+    history.replaceState(null, "", href);
+  };
+
   return (
     <header
       className={cn(
@@ -31,6 +38,7 @@ export function Nav() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a
           href="#hero"
+          onClick={(e) => handleClick(e, "#hero")}
           className="font-mono text-sm tracking-widest text-foreground"
         >
           JUSTIN
@@ -40,6 +48,7 @@ export function Nav() {
             <li key={link.href}>
               <a
                 href={link.href}
+                onClick={(e) => handleClick(e, link.href)}
                 className="text-sm text-muted transition-colors hover:text-foreground"
               >
                 {link.label}

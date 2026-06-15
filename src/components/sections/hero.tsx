@@ -1,6 +1,6 @@
 import { HeroShaderClient } from "@/components/hero-shader-client";
-import { LiquidButton } from "@/components/ui/liquid-glass-button";
 import { Reveal } from "@/components/reveal";
+import { HeroActions } from "@/components/hero-actions";
 
 export function Hero() {
   return (
@@ -35,24 +35,7 @@ export function Hero() {
         </Reveal>
 
         <Reveal delay={0.3}>
-          <div className="mt-10 flex flex-wrap items-center gap-6">
-            <LiquidButton href="#work" size="lg">
-              View work
-            </LiquidButton>
-
-            <a
-              href="#contact"
-              className="group inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-accent"
-            >
-              Get in touch
-              <span
-                aria-hidden
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              >
-                &rarr;
-              </span>
-            </a>
-          </div>
+          <HeroActions />
         </Reveal>
       </div>
 
