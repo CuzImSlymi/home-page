@@ -16,9 +16,38 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Justin's Portfolio",
+  metadataBase: new URL("https://slymi.org"),
+  title: "Slymi's Portfolio",
   description:
-    "Software engineer focused on AI. Builder of high-traffic platforms, computer vision systems, and developer tooling.",
+    "I'm Justin, a full-stack engineer with expertise in artificial intelligence and production-ready systems.",
+  keywords: ["Slymi", "CuzImSlymi", "Justin", "portfolio"],
+  authors: [{ name: "Justin", url: "https://github.com/CuzImSlymi" }],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://slymi.org",
+    siteName: "Slymi",
+    title: "Slymi's Portfolio",
+    description:
+      "I'm Justin, a full-stack engineer with expertise in artificial intelligence and production-ready systems.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Slymi's portfolio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Slymi's Portfolio",
+    description:
+      "I'm Justin, a full-stack engineer with expertise in artificial intelligence and production-ready systems.",
+    images: ["/og-image.png"],
+  },
 };
 
 export const viewport: Viewport = {
